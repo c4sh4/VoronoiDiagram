@@ -1,0 +1,14 @@
+# ninja log v5
+0	313	6890904388426163	CMakeFiles/VoronoiDiagram.dir/main.cpp.obj	54d38cec87a865b3
+675	856	6890905674553757	VoronoiDiagram.exe	29845462ebe996f5
+2	344	6890904928800596	CMakeFiles/VoronoiDiagram.dir/Vec.cpp.obj	70ee2fa12a9c4460
+3	674	6890905672773353	CMakeFiles/VoronoiDiagram.dir/halfPlane.cpp.obj	39a7f9469dc4dc7
+3	847	6890906331266914	CMakeFiles/VoronoiDiagram.dir/interAlg.cpp.obj	df58eb9aefd49412
+847	1058	6890906333337379	VoronoiDiagram.exe	8097cb4b4d0f5f81
+2	541	6890906668175425	CMakeFiles/VoronoiDiagram.dir/main.cpp.obj	54d38cec87a865b3
+541	753	6890906670255898	VoronoiDiagram.exe	8097cb4b4d0f5f81
+6	400	6890907624616162	CMakeFiles/VoronoiDiagram.dir/Vec.cpp.obj	70ee2fa12a9c4460
+2	648	6890907627096723	CMakeFiles/VoronoiDiagram.dir/main.cpp.obj	54d38cec87a865b3
+10	760	6890907628226977	CMakeFiles/VoronoiDiagram.dir/halfPlane.cpp.obj	39a7f9469dc4dc7
+13	955	6890907630177418	CMakeFiles/VoronoiDiagram.dir/interAlg.cpp.obj	df58eb9aefd49412
+955	1184	6890907632417930	VoronoiDiagram.exe	8097cb4b4d0f5f81
