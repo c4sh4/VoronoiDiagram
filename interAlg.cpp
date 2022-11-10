@@ -83,14 +83,20 @@ void interAlg::getVertexes() {
         } while (i < deq.size()-1 && it < deq.end());
         if (!(firstVert == vert(deq.front(), deq.back())))
         {
-            vertex.emplace_back(vert(deq.front(), deq.back()));
+            for(int j =1; j < deq.size()-1;++j) {
+                if (checkin(deq.front(), deq.back(), deq[j])){
+                    //std::cout << "CHECKIN? point:" << vert(deq.front(), deq.back()) << std::endl;
+                    vertex.emplace_back(vert(deq.front(), deq.back()));}
+                }
         }
         else
         {
             deq.erase((it+1));
+            //std::cout<<"!erase in while" << vert(deq.front(), deq.back()) << std::endl;
         }
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));
+        //std::cout<<"!second emplace back in while" << vert(deq.front(), deq.back()) << std::endl;
     }
 }
 //
