@@ -49,7 +49,6 @@ Vec interAlg::vert(halfPlane &hp1, halfPlane &hp2) {
 //
 bool interAlg::checkin(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
     Vec vector = vert(hp1, hp2);
-
     if (oppositeSide(hp1, hp2) && isCollinear(hp1, hp2)) {
         return true;
     }
@@ -99,7 +98,7 @@ void interAlg::getVertexes() {
         if (!(firstVert == vert(deq.front(), deq.back())))
         {
             for(int j =1; j < deq.size()-1;++j) {
-                if (checkinOld(deq.front(), deq.back(), deq[j])){
+                if (checkinOld(deq.front(), deq.back(), deq[j]) && !(vert(deq.front(), deq.back()) == vertex.back())){
                     //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
                 }
