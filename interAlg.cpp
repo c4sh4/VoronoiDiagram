@@ -15,6 +15,8 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
+            if (afterSort(deq.at(deq.size()-2), deq.back(), hp)){
+            }
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkin(deq.at(1), deq.front(), hp))
@@ -54,12 +56,21 @@ bool interAlg::checkin(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
     else if ((plane.pointStatus(vector) >= 0 )) {
         return true;
     }
+    else if (afterSort(hp1, hp2, plane)){
+        return true;
+    }
     else  return false;
 }
 //
-bool checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
-    Vec vector = interAlg::vert(hp1, hp2);
-    return ((plane.pointStatus(vector) >= 0));
+bool interAlg::checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
+    Vec vector = vert(hp1, hp2);
+    if (oppositeSide(hp1, hp2) && isCollinear(hp1, hp2)) {
+        return true;
+    }
+    else if ((plane.pointStatus(vector) >= 0 )) {
+        return true;
+    }
+    else  return false;
 }
 //
 void interAlg::getVertexes() {
@@ -69,6 +80,9 @@ void interAlg::getVertexes() {
         Vec firstVert = vert(deq.at(0), deq.at(1));
         vertex.emplace_back(vert(deq.at(0), deq.at(1)));
         do {
+            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1))){
+                vertex.pop_back();
+            }
             if ((firstVert == vert(deq.at(i), deq.at(i+1))))
             {
                 deq.erase((it+1));
@@ -81,16 +95,19 @@ void interAlg::getVertexes() {
             ++i;
             it++;
         } while (i < deq.size()-1 && it < deq.end());
+
         if (!(firstVert == vert(deq.front(), deq.back())))
         {
             for(int j =1; j < deq.size()-1;++j) {
-                if (checkin(deq.front(), deq.back(), deq[j])){
+                if (checkinOld(deq.front(), deq.back(), deq[j])){
+                    //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
                 }
         }
         else
         {
             deq.erase((it+1));
+            std::cout <<"erase in if = " << vert(deq.front(), deq.back()) <<std::endl;
         }
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));

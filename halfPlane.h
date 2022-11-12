@@ -24,7 +24,7 @@ public:
 };
 std::ostream& operator<<(std::ostream& os, const halfPlane& hp);
 bool oppositeSide(halfPlane& hp1, halfPlane& hp2);
-
+bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3);
 //collections of halfPlanes
 class polytopes{
 public:

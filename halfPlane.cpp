@@ -100,6 +100,19 @@ bool oppositeSide(halfPlane& hp1, halfPlane& hp2) {
     }
 }
 //
+bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3) {
+    Vec v1(hp1.A, hp1.B);
+    Vec v2(hp2.A, hp2.B);
+    Vec v3(hp3.A, hp3.B);
+    //std::cout << "v1 dot v2 : " <<v1.getDot(v2) << std::endl;
+    //std::cout << "v1 dot v3 : " << v1.getDot(v3) << std::endl;
+    if (v1.getDot(v2) > 0){
+        if (v1.getDot(v2) < v1.getDot(v3)){
+            return true;
+        } else return false;
+    } else return false;
+}
+//
 //special function to check non-obvious exceptions
 bool simCoefficient(halfPlane& hp1, halfPlane& hp2) {
     if (hp1.A != 0) {

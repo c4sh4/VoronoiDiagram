@@ -27,10 +27,11 @@ public:
     void getVertexes();
     //
     void Voronoi(std::vector<polytopes> cells);
+    //
+    bool checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane);
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);
-bool checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane);
 halfPlane getPerpendicular(Vec &sitef, Vec &point);
 
 #endif //VORONOIDIAGRAM_INTERALG_H
