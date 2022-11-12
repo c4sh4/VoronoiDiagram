@@ -15,8 +15,6 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
-            if (afterSort(deq.at(deq.size()-2), deq.back(), hp)){
-            }
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkin(deq.at(1), deq.front(), hp))
@@ -79,7 +77,8 @@ void interAlg::getVertexes() {
         Vec firstVert = vert(deq.at(0), deq.at(1));
         vertex.emplace_back(vert(deq.at(0), deq.at(1)));
         do {
-            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1))){
+            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkinOld(deq.at(i-1), deq.at(i), deq.at(i+1))){
+                //std::cout << " !!! " << vertex.back() << std::endl;
                 vertex.pop_back();
             }
             if ((firstVert == vert(deq.at(i), deq.at(i+1))))
