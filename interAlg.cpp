@@ -15,6 +15,7 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
+
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkin(deq.at(1), deq.front(), hp))
@@ -23,6 +24,7 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout <<"HP2 == " << deq.front() << std::endl;
             }
+
             deq.pop_front();
         }
         deq.emplace_back(hp);
@@ -81,12 +83,14 @@ void interAlg::getVertexes() {
                 //std::cout << " !!! " << vertex.back() << std::endl;
                 vertex.pop_back();
             }
+
             if ((firstVert == vert(deq.at(i), deq.at(i+1))))
             {
-                deq.erase((it+1));
-                --i;
+                //deq.erase((it+1));
+                //--i;
                 it--;
-            } else {
+            }
+             else {
                 vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
                 firstVert = vert(deq.at(i), deq.at(i+1));
             }
@@ -100,12 +104,12 @@ void interAlg::getVertexes() {
                 if (checkinOld(deq.front(), deq.back(), deq[j]) && !(vert(deq.front(), deq.back()) == vertex.back())){
                     //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
-                }
+            }
         }
         else
         {
             deq.erase((it+1));
-            std::cout <<"erase in if = " << vert(deq.front(), deq.back()) <<std::endl;
+            //std::cout <<"erase in if = " << vert(deq.front(), deq.back()) <<std::endl;
         }
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));

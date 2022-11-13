@@ -29,6 +29,7 @@ public:
     void Voronoi(std::vector<polytopes> cells);
     //
     bool checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane);
+    //
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);
