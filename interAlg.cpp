@@ -90,7 +90,7 @@ void interAlg::getVertexes() {
                 //--i;
                 it--;
             }
-             else {
+            else {
                 vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
                 firstVert = vert(deq.at(i), deq.at(i+1));
             }
@@ -109,7 +109,6 @@ void interAlg::getVertexes() {
         else
         {
             deq.erase((it+1));
-            //std::cout <<"erase in if = " << vert(deq.front(), deq.back()) <<std::endl;
         }
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));
