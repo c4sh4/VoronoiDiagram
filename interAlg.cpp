@@ -146,6 +146,7 @@ void interAlg::getVertexes() {
             ++i;
             it+=1;
         } while (i < deq.size()-1);
+
         if (!(firstVert == vert(deq.front(), deq.back())))
         {
             for(int j =1; j < deq.size()-1;++j) {
@@ -154,6 +155,7 @@ void interAlg::getVertexes() {
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
             }
         }
+
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));
     }
