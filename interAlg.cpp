@@ -9,7 +9,7 @@ void interAlg::getIntersection(polytopes& pt)
 {
     for (auto hp : pt.mPlanes)
     {
-        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp))
+        while (deq.size() > 1 && !checkin(deq.at(deq.size()-2), deq.back(), hp))
         {
             if ((oppositeSide(deq.at(deq.size()-2), deq.back()) && isCollinear(deq.at(deq.size()-2), deq.back())))
             {
@@ -18,7 +18,7 @@ void interAlg::getIntersection(polytopes& pt)
             //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
-        while (deq.size() > 1 && !checkinOld(deq.at(1), deq.front(), hp))
+        while (deq.size() > 1 && !checkin(deq.at(1), deq.front(), hp))
         {
             if (oppositeSide(deq.at(1), deq.front()) && isCollinear(deq.at(1), deq.front()))
             {
@@ -30,14 +30,14 @@ void interAlg::getIntersection(polytopes& pt)
         deq.emplace_back(hp);
     }
     /////////////////////////
-    while (deq.size() > 2 && !checkinOld(deq.back(), deq.at(deq.size() - 2), deq.front()))
+    while (deq.size() > 2 && !checkin(deq.back(), deq.at(deq.size() - 2), deq.front()))
     {
         //вырезаем здесь!
         //std::cout<<"pop_back in while2: " << deq.front() << std::endl;
         deq.pop_back();
     }
 
-    while (deq.size() > 2 && !checkinOld(deq.front(), deq.at(1), deq.back()))
+    while (deq.size() > 2 && !checkin(deq.front(), deq.at(1), deq.back()))
     {
         //std::cout<<"pop_front in while2: " << deq.back() << std::endl;
         deq.pop_front();
