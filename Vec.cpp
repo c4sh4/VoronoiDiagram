@@ -27,6 +27,8 @@ Vec operator-(Vec& lhs, const Vec& rhs) {
 double Vec::getDet(const Vec &vec) const {
     return x*vec.y - y*vec.x;
 }
+
+//
 double Vec::getDot(const Vec &vec) const {
     return x*vec.x + y*vec.y;
 }

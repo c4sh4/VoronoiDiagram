@@ -15,7 +15,7 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
-
+            //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkin(deq.at(1), deq.front(), hp))
@@ -24,19 +24,26 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout <<"HP2 == " << deq.front() << std::endl;
             }
-
+            //std::cout<<"pop_front in while: " << deq.front() << std::endl;
             deq.pop_front();
         }
         deq.emplace_back(hp);
     }
-    while (deq.size() > 2 && !checkin(deq.front(), deq.at(1), deq.back()))
-    {
-        deq.pop_back();
-    }
+    /////////////////////////
     while (deq.size() > 2 && !checkin(deq.back(), deq.at(deq.size() - 2), deq.front()))
     {
+        //вырезаем здесь!
+        //std::cout<<"pop_back in while2: " << deq.front() << std::endl;
+        deq.pop_back();
+    }
+
+    while (deq.size() > 2 && !checkin(deq.front(), deq.at(1), deq.back()))
+    {
+        //std::cout<<"pop_front in while2: " << deq.back() << std::endl;
         deq.pop_front();
     }
+
+    /////////////////////////
 }
 //
 Vec interAlg::vert(halfPlane &hp1, halfPlane &hp2) {
@@ -72,32 +79,73 @@ bool interAlg::checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
     else  return false;
 }
 //
+Vec interAlg::FirstVert(){
+    Vec firstVert;
+    int p = 1;
+    int a = 2;
+    for (int m=0; m < deq.size(); ++m)
+    {
+        if (checkinOld(deq.at(m), deq.at(p), deq.at(a)))
+        {
+            firstVert = vert(deq.at(m), deq.at(m+1));
+            std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
+            //std::cout << "vert in verushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
+            //it++;
+            ++p;
+            ++a;
+            if (p == deq.size()){
+                p = 0;
+            }
+            if (a == deq.size()){
+                a = 0;
+            }
+            break;
+        }
+    }
+    return firstVert;
+}
+//
 void interAlg::getVertexes() {
     auto it = deq.begin();
     if (deq.size() > 2) {
-        int i =1;
-        Vec firstVert = vert(deq.at(0), deq.at(1));
-        vertex.emplace_back(vert(deq.at(0), deq.at(1)));
-        do {
-            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkinOld(deq.at(i-1), deq.at(i), deq.at(i+1))){
-                //std::cout << " !!! " << vertex.back() << std::endl;
-                vertex.pop_back();
+        Vec firstVert;
+        for (int m=0, p=1, a=2; m < deq.size(); ++m, ++p, ++a)
+        {
+            if (p == deq.size()){
+                p = 0;
             }
-
-            if ((firstVert == vert(deq.at(i), deq.at(i+1))))
+            if (a == deq.size()){
+                a = 0;
+            }
+            if (checkinOld(deq.at(m), deq.at(p), deq.at(a)))
             {
-                //deq.erase((it+1));
-                //--i;
-                it--;
+                firstVert = vert(deq.at(m), deq.at(m+1));
+                //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
+                //std::cout << "vert in vertushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
+                //it++;
+                break;
+            }
+        }
+        //std::cout << "firstVert!!" << firstVert << std::endl;
+        vertex.emplace_back(firstVert);
+        int i = 1;
+        do {
+
+            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkin(deq.at(i-1), deq.at(i), deq.at(i+1))){
+                //std::cout << " !!! " << vertex.back() << std::endl;
+                //vertex.pop_back();
             }
             else {
-                vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
-                firstVert = vert(deq.at(i), deq.at(i+1));
+                if(checkin(deq.at(i), deq.at(i+1), deq.at(i-1)))
+                {
+                    vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
+                    //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
+                    firstVert = vert(deq.at(i), deq.at(i+1));
+                }
             }
             ++i;
-            it++;
-        } while (i < deq.size()-1 && it < deq.end());
-
+            it+=1;
+        } while (i < deq.size()-1);
         if (!(firstVert == vert(deq.front(), deq.back())))
         {
             for(int j =1; j < deq.size()-1;++j) {
@@ -105,10 +153,6 @@ void interAlg::getVertexes() {
                     //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
             }
-        }
-        else
-        {
-            deq.erase((it+1));
         }
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));
@@ -162,6 +206,13 @@ void interAlg::Voronoi(std::vector<polytopes> cells) {
     for(auto & cell : cells) {
         interAlg alg_for_site;
         cell.sortPolytopes();
+        /*
+        for(int k = 0; k <cell.mPlanes.size(); k++){
+            std::cout << "!!!!!!!!!!!!!!!!" << std::endl;
+            std::cout << "Cell is:" << cell.mVec << std::endl;
+            std::cout << cell.mPlanes[k] << std::endl;
+        }
+        */
         alg_for_site.getIntersection(cell);
         alg_for_site.post = cell.mVec;
         alg_for_site.getVertexes();

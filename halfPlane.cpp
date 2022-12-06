@@ -48,6 +48,15 @@ void polytopes::sortPolytopes() {
                 lower.emplace_back(hp);
             }
         }
+        /*
+        for( int i = 0; i<upper.size(); ++i)
+        {
+        std::cout << "upper is: "<< upper[i] << std::endl;
+        }
+        for( int i = 0; i<lower.size(); ++i)
+        {
+            std::cout << "lower is: "<< lower[i] << std::endl;
+         }*/
         std::sort(upper.begin(), upper.end(), cmp);
         std::sort(lower.begin(), lower.end(), cmp);
         mPlanes.clear();
@@ -106,11 +115,13 @@ bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3) {
     Vec v3(hp3.A, hp3.B);
     //std::cout << "v1 dot v2 : " <<v1.getDot(v2) << std::endl;
     //std::cout << "v1 dot v3 : " << v1.getDot(v3) << std::endl;
-    if (v1.getDot(v2) > 0){
-        if (v1.getDot(v2) < v1.getDot(v3)){
+    //std::cout << "v2 dot v3 : " << v2.getDot(v3) << std::endl;
+    if (v1.getDot(v2) > 0 && v1.getDot(v2) < v1.getDot(v3)){
+            return true;
+    }
+    else if (v1.getDot(v3) > 0 && v2.getDot(v3) < 0 && fabs(v1.getDot(v3)) > fabs(v2.getDot(v3))) {
             return true;
         } else return false;
-    } else return false;
 }
 //
 //special function to check non-obvious exceptions

@@ -30,6 +30,7 @@ public:
     //
     bool checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane);
     //
+    Vec FirstVert();
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);
