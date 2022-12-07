@@ -26,6 +26,7 @@ std::ostream& operator<<(std::ostream& os, const halfPlane& hp);
 bool oppositeSide(halfPlane& hp1, halfPlane& hp2);
 bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3);
 //collections of halfPlanes
+
 class polytopes{
 public:
     std::vector<halfPlane> mPlanes;
@@ -34,11 +35,12 @@ public:
     //constructor
     polytopes();
     //sort by normal
-    void sortPolytopes();
+    polytopes sortPolytopes();
     //method for tracking of included half-planes
     void checkIncl(std::vector<halfPlane>& ch);
     //boundary box
     //void boundaryBox();
+    std::vector<halfPlane> reindex(std::vector<halfPlane> &ch);
 };
 bool isCollinear(halfPlane& hp1, halfPlane& hp2);
 bool simCoefficient(halfPlane& hp1, halfPlane& hp2);

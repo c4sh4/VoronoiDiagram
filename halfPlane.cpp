@@ -36,7 +36,7 @@ bool cmp(halfPlane& hp1, halfPlane& hp2) {
     return v1.getDet(v2) > 0;
 }
 //sort
-void polytopes::sortPolytopes() {
+polytopes polytopes::sortPolytopes() {
     if (mPlanes.size() > 1) {
         std::vector<halfPlane> upper{};
         std::vector<halfPlane> lower{};
@@ -65,8 +65,68 @@ void polytopes::sortPolytopes() {
         std::move(upper.begin(), upper.end(), check.begin());
         std::move(lower.begin(), lower.end(), check.begin() + upper.size());
         checkIncl(check);
+/*
+        std::cout << " unsorted: " << mVec << std::endl;
+        for(int i = 0; i < check.size(); ++i){
+            std::cout << "uc: " << check[i] <<std::endl;
+        }
+*/
+        std::vector<halfPlane> sorted_check{};
+        polytopes new_pol;
+        sorted_check = reindex(check);
+        new_pol.mPlanes = sorted_check;
+        new_pol.mVec = mVec;
+        /*
+        std::cout << "sorted ch: " << std::endl;
+        for(int i = 0; i < sorted_check.size(); ++i){
+            std::cout << "sc: " << sorted_check[i] <<std::endl;
+        }
+        */
+        return new_pol;
     }
 }
+//
+std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
+    int k =0;
+    unsigned int size = ch.size();
+    for (int i = 0;i < ch.size()-1;++i)
+    {
+        Vec v1(ch[i].A, ch[i].B);
+        Vec v2(ch[i+1].A,ch[i+1].B);
+        if (v1.getDet(v2) < 0) {
+            //std::cout << "mi bili v breke: " << ch[i] << std::endl;
+            //std::cout << "mi bili v breke: " << ch[i+1] << std::endl;
+            //std::cout << "k: " << k << std::endl;
+            break;
+        }
+        k+=1;
+    }
+    //std::cout << "k is: " << k << std::endl;
+    if (k != ch.size()-1)
+    {
+        k+=1;
+        std::vector<halfPlane> ch2;
+        //std::cout<<"sozdali"<<std::endl;
+        int i = 0;
+        for (int j =0; j < ch.size();++j)
+        {
+            unsigned int z;
+            z = (i+k)%size;
+            //if (z >= size)
+
+            ch2.push_back(ch[z]);
+            //ch2.push_back(ch[z]);
+
+            ++i;
+            //std::cout<<ch2[j]<<std::endl;
+        }
+
+        return ch2;
+    } else {
+        return ch;
+    }
+}
+
 //
 void polytopes::checkIncl(std::vector<halfPlane>& ch) {
     for (int i = 0; i < ch.size() - 1; ++i) {
@@ -99,6 +159,8 @@ void polytopes::checkIncl(std::vector<halfPlane>& ch) {
         mPlanes.emplace_back(ch[ch.size()-1]);
     }
 }
+
+
 bool oppositeSide(halfPlane& hp1, halfPlane& hp2) {
     Vec v1(hp1.A, hp1.B);
     Vec v2(hp2.A, hp2.B);
@@ -116,12 +178,19 @@ bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3) {
     //std::cout << "v1 dot v2 : " <<v1.getDot(v2) << std::endl;
     //std::cout << "v1 dot v3 : " << v1.getDot(v3) << std::endl;
     //std::cout << "v2 dot v3 : " << v2.getDot(v3) << std::endl;
-    if (v1.getDot(v2) > 0 && v1.getDot(v2) < v1.getDot(v3)){
+    if (v1.getDot(v2) > 0 && v1.getDot(v2) < v1.getDot(v3))
+    {
             return true;
     }
-    else if (v1.getDot(v3) > 0 && v2.getDot(v3) < 0 && fabs(v1.getDot(v3)) > fabs(v2.getDot(v3))) {
+    else if (v1.getDet(v3) > 0 && v2.getDet(v3) < 0 && fabs(v1.getDot(v3)) > fabs(v2.getDot(v3))) {
+            //std::cout << "=)" << std::endl;
             return true;
-        } else return false;
+        }
+    /*else if (v1.getDot(v2) < v1.getDot(v3) && v1.getDot(v2) < v2.getDot(v3))
+    {
+        std::cout << "=)))" << std::endl;
+    }*/
+    else return false;
 }
 //
 //special function to check non-obvious exceptions

@@ -1,6 +1,7 @@
 #include "interAlg.h"
 //STL
 #include <cmath>
+#include <vector>
 
 //
 interAlg::interAlg(): deq(), vertex(), post() {}
@@ -9,16 +10,17 @@ void interAlg::getIntersection(polytopes& pt)
 {
     for (auto hp : pt.mPlanes)
     {
-        while (deq.size() > 1 && !checkin(deq.at(deq.size()-2), deq.back(), hp))
+        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp))
         {
             if ((oppositeSide(deq.at(deq.size()-2), deq.back()) && isCollinear(deq.at(deq.size()-2), deq.back())))
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
+            //std::cout<<"iter: " << hp << std::endl;
             //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
-        while (deq.size() > 1 && !checkin(deq.at(1), deq.front(), hp))
+        while (deq.size() > 1 && !checkinOld(deq.at(1), deq.front(), hp))
         {
             if (oppositeSide(deq.at(1), deq.front()) && isCollinear(deq.at(1), deq.front()))
             {
@@ -30,14 +32,14 @@ void interAlg::getIntersection(polytopes& pt)
         deq.emplace_back(hp);
     }
     /////////////////////////
-    while (deq.size() > 2 && !checkin(deq.back(), deq.at(deq.size() - 2), deq.front()))
+    while (deq.size() > 2 && !checkinOld(deq.back(), deq.at(deq.size() - 2), deq.front()))
     {
         //вырезаем здесь!
         //std::cout<<"pop_back in while2: " << deq.front() << std::endl;
         deq.pop_back();
     }
 
-    while (deq.size() > 2 && !checkin(deq.front(), deq.at(1), deq.back()))
+    while (deq.size() > 2 && !checkinOld(deq.front(), deq.at(1), deq.back()))
     {
         //std::cout<<"pop_front in while2: " << deq.back() << std::endl;
         deq.pop_front();
@@ -65,6 +67,9 @@ bool interAlg::checkin(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
     else if (afterSort(hp1, hp2, plane)){
         return true;
     }
+    /*else if (afterSort(hp1, hp2, plane)){
+        return true;
+    }*/
     else  return false;
 }
 //
@@ -136,7 +141,7 @@ void interAlg::getVertexes() {
                 //vertex.pop_back();
             }
             else {
-                if(checkin(deq.at(i), deq.at(i+1), deq.at(i-1)))
+                if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)))
                 {
                     vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
                     //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
@@ -207,15 +212,23 @@ void interAlg::Voronoi(std::vector<polytopes> cells) {
     std::vector<interAlg> VorAlg;
     for(auto & cell : cells) {
         interAlg alg_for_site;
-        cell.sortPolytopes();
+        //new_cell.resize(cell.sortPolytopes().size());
+        //std::move(cell.sortPolytopes().begin(), cell.sortPolytopes().end(), new_cell.begin());
         /*
-        for(int k = 0; k <cell.mPlanes.size(); k++){
+        check.resize(upper.size() + lower.size());
+        std::move(upper.begin(), upper.end(), check.begin());
+        std::move(lower.begin(), lower.end(), check.begin() + upper.size());*/
+        /*
+         *
+        for(int k = 0; k <new_cell.mPlanes.size(); k++){
             std::cout << "!!!!!!!!!!!!!!!!" << std::endl;
             std::cout << "Cell is:" << cell.mVec << std::endl;
             std::cout << cell.mPlanes[k] << std::endl;
-        }
-        */
-        alg_for_site.getIntersection(cell);
+        }*/
+        polytopes new_cell;
+        //cell.sortPolytopes();
+        new_cell = cell.sortPolytopes();
+        alg_for_site.getIntersection(new_cell);
         alg_for_site.post = cell.mVec;
         alg_for_site.getVertexes();
         VorAlg.emplace_back(alg_for_site);
