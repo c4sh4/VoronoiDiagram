@@ -31,6 +31,8 @@ public:
     bool checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane);
     //
     Vec FirstVert();
+
+    bool Collinear(halfPlane &hp1, halfPlane &hp2);
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);

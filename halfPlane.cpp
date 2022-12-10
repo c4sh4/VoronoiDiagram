@@ -85,6 +85,7 @@ polytopes polytopes::sortPolytopes() {
         return new_pol;
     }
 }
+
 //
 std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     int k =0;

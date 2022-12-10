@@ -10,14 +10,14 @@ void interAlg::getIntersection(polytopes& pt)
 {
     for (auto hp : pt.mPlanes)
     {
-        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp))
+        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp) && Collinear(deq.front(),deq.back()))
         {
             if ((oppositeSide(deq.at(deq.size()-2), deq.back()) && isCollinear(deq.at(deq.size()-2), deq.back())))
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
-            //std::cout<<"iter: " << hp << std::endl;
-            //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
+            std::cout<<"iter: " << hp << std::endl;
+            std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkinOld(deq.at(1), deq.front(), hp))
@@ -26,7 +26,7 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout <<"HP2 == " << deq.front() << std::endl;
             }
-            //std::cout<<"pop_front in while: " << deq.front() << std::endl;
+            std::cout<<"pop_front in while: " << deq.front() << std::endl;
             deq.pop_front();
         }
         deq.emplace_back(hp);
@@ -35,13 +35,13 @@ void interAlg::getIntersection(polytopes& pt)
     while (deq.size() > 2 && !checkinOld(deq.back(), deq.at(deq.size() - 2), deq.front()))
     {
         //вырезаем здесь!
-        //std::cout<<"pop_back in while2: " << deq.front() << std::endl;
+        std::cout<<"pop_back in while2: " << deq.front() << std::endl;
         deq.pop_back();
     }
 
     while (deq.size() > 2 && !checkinOld(deq.front(), deq.at(1), deq.back()))
     {
-        //std::cout<<"pop_front in while2: " << deq.back() << std::endl;
+        std::cout<<"pop_front in while2: " << deq.back() << std::endl;
         deq.pop_front();
     }
 
@@ -71,6 +71,13 @@ bool interAlg::checkin(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
         return true;
     }*/
     else  return false;
+}
+//
+bool interAlg::Collinear(halfPlane& hp1, halfPlane& hp2) {
+    //Vec vector = vert(hp1, hp2);
+    if (oppositeSide(hp1, hp2) && isCollinear(hp1, hp2)){
+        return true;
+    } else return false;
 }
 //
 bool interAlg::checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
@@ -136,9 +143,17 @@ void interAlg::getVertexes() {
         int i = 1;
         do {
 
-            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkin(deq.at(i-1), deq.at(i), deq.at(i+1))){
+            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkinOld(deq.at(i-1), deq.at(i), deq.at(i+1))){
                 //std::cout << " !!! " << vertex.back() << std::endl;
                 //vertex.pop_back();
+            }
+            // Удаление полуплоскости, которая не принадлежить ячейке, но проходит через одну из вершин!
+            // (!) не комментить
+            else if ((firstVert == vert(deq.at(i), deq.at(i+1))))
+            {
+                deq.erase((it+1));
+                --i;
+                it--;
             }
             else {
                 if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)))
@@ -147,6 +162,7 @@ void interAlg::getVertexes() {
                     //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
                     firstVert = vert(deq.at(i), deq.at(i+1));
                 }
+
             }
             ++i;
             it+=1;
