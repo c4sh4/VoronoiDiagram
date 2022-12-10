@@ -10,14 +10,14 @@ void interAlg::getIntersection(polytopes& pt)
 {
     for (auto hp : pt.mPlanes)
     {
-        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp) && Collinear(deq.front(),deq.back()))
+        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp) && !Collinear(deq.front(),deq.back()))
         {
             if ((oppositeSide(deq.at(deq.size()-2), deq.back()) && isCollinear(deq.at(deq.size()-2), deq.back())))
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
-            //std::cout<<"iter: " << hp << std::endl;
-            //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
+            std::cout<<"iter: " << hp << std::endl;
+            std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkinOld(deq.at(1), deq.front(), hp))
@@ -75,7 +75,8 @@ bool interAlg::checkin(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
 //
 bool interAlg::Collinear(halfPlane& hp1, halfPlane& hp2) {
     //Vec vector = vert(hp1, hp2);
-    if (oppositeSide(hp1, hp2) && isCollinear(hp1, hp2)){
+    if (isCollinear(hp1, hp2)){
+        //std::cout<<" " << hp1 << " " << hp2 <<std::endl;
         return true;
     } else return false;
 }
