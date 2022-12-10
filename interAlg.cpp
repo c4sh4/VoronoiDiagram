@@ -16,8 +16,8 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
-            std::cout<<"iter: " << hp << std::endl;
-            std::cout<<"pop_back in while1: " << deq.back() << std::endl;
+            //std::cout<<"iter: " << hp << std::endl;
+            //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkinOld(deq.at(1), deq.front(), hp))
@@ -26,7 +26,7 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout <<"HP2 == " << deq.front() << std::endl;
             }
-            std::cout<<"pop_front in while: " << deq.front() << std::endl;
+            //std::cout<<"pop_front in while: " << deq.front() << std::endl;
             deq.pop_front();
         }
         deq.emplace_back(hp);
@@ -35,13 +35,13 @@ void interAlg::getIntersection(polytopes& pt)
     while (deq.size() > 2 && !checkinOld(deq.back(), deq.at(deq.size() - 2), deq.front()))
     {
         //вырезаем здесь!
-        std::cout<<"pop_back in while2: " << deq.front() << std::endl;
+        //std::cout<<"pop_back in while2: " << deq.front() << std::endl;
         deq.pop_back();
     }
 
     while (deq.size() > 2 && !checkinOld(deq.front(), deq.at(1), deq.back()))
     {
-        std::cout<<"pop_front in while2: " << deq.back() << std::endl;
+        //std::cout<<"pop_front in while2: " << deq.back() << std::endl;
         deq.pop_front();
     }
 
