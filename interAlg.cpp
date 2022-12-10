@@ -16,8 +16,8 @@ void interAlg::getIntersection(polytopes& pt)
             {
                 //std::cout<< "HP1 == " << deq.back() << std::endl;
             }
-            std::cout<<"iter: " << hp << std::endl;
-            std::cout<<"pop_back in while1: " << deq.back() << std::endl;
+            //std::cout<<"iter: " << hp << std::endl;
+            //std::cout<<"pop_back in while1: " << deq.back() << std::endl;
             deq.pop_back();
         }
         while (deq.size() > 1 && !checkinOld(deq.at(1), deq.front(), hp))
