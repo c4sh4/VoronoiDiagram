@@ -73,14 +73,6 @@ bool interAlg::checkin(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
     else  return false;
 }
 //
-bool interAlg::Collinear(halfPlane& hp1, halfPlane& hp2) {
-    //Vec vector = vert(hp1, hp2);
-    if (isCollinear(hp1, hp2)){
-        //std::cout<<" " << hp1 << " " << hp2 <<std::endl;
-        return true;
-    } else return false;
-}
-//
 bool interAlg::checkinOld(halfPlane& hp1, halfPlane& hp2, halfPlane& plane) {
     Vec vector = vert(hp1, hp2);
     if (oppositeSide(hp1, hp2) && isCollinear(hp1, hp2)) {
@@ -142,7 +134,7 @@ void interAlg::getVertexes() {
             }
             if (checkinOld(deq.at(m), deq.at(p), deq.at(a)))
             {
-                if (!Collinear(deq.at(m), deq.at(m+1))){
+                if (!isCollinear(deq.at(m), deq.at(m+1))){
                 firstVert = vert(deq.at(m), deq.at(m+1));
                 //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
                 //std::cout << "vert in vertushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
@@ -162,10 +154,10 @@ void interAlg::getVertexes() {
             }
             // Удаление полуплоскости, которая не принадлежить ячейке, но проходит через одну из вершин!
             // (!) не комментить
-            else if ((firstVert == vert(deq.at(i), deq.at(i+1))) && par!=i)
+            else if ((firstVert == vert(deq.at(i), deq.at(i+1))) && par != i)
             {
                 //std::cout << "=) sluchilsya erase" << std::endl;
-                //std::cout << "=) " << (it+1)->C << std::endl;
+                //std::cout << "=) " <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
                 deq.erase((it+1));
                 --i;
                 it--;
@@ -177,11 +169,23 @@ void interAlg::getVertexes() {
                     //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
                     firstVert = vert(deq.at(i), deq.at(i+1));
                 }
-
             }
             ++i;
             it+=1;
         } while (i < deq.size()-1);
+
+
+        if (checkForLastDot(deq.front(), deq.at(deq.size()-2), deq.back()))
+        {
+            //std::cout << "back " << deq.back() << std::endl;
+            //std::cout << "back-1 " <<  deq.at(deq.size()-2) << std::endl;
+            //std::cout << "SITE " << deq.back().site << std::endl;
+            std::cout << "zabavnoye peresecheniye" << std::endl;
+            std::cout << "=) " << deq.back() << std::endl;
+            deq.pop_back();
+            --i;
+            it--;
+        }
 
         if (!(firstVert == vert(deq.front(), deq.back())))
         {
@@ -191,10 +195,13 @@ void interAlg::getVertexes() {
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
             }
         }
-
     }  else {
         vertex.emplace_back(vert(deq.front(), deq.back()));
     }
+}
+//
+bool interAlg::checkForLastDot(halfPlane& front, halfPlane& back, halfPlane& candidate){
+    return(vert(front, back) == vert(front, candidate) && vert(front, candidate) == vert(back, candidate));
 }
 //
 std::ostream& operator<<(std::ostream& os, const interAlg& alg) {

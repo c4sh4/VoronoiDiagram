@@ -33,6 +33,10 @@ public:
     Vec FirstVert();
 
     bool Collinear(halfPlane &hp1, halfPlane &hp2);
+
+    bool checkForLastDot(halfPlane &hp1, halfPlane &hp2);
+
+    bool checkForLastDot(halfPlane &front, halfPlane &back, halfPlane &candidate);
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);
