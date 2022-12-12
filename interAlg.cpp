@@ -180,8 +180,8 @@ void interAlg::getVertexes() {
             //std::cout << "back " << deq.back() << std::endl;
             //std::cout << "back-1 " <<  deq.at(deq.size()-2) << std::endl;
             //std::cout << "SITE " << deq.back().site << std::endl;
-            std::cout << "zabavnoye peresecheniye" << std::endl;
-            std::cout << "=) " << deq.back() << std::endl;
+            //std::cout << "zabavnoye peresecheniye" << std::endl;
+            //std::cout << "=) " << deq.back() << std::endl;
             deq.pop_back();
             --i;
             it--;
