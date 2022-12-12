@@ -65,15 +65,20 @@ polytopes polytopes::sortPolytopes() {
         std::move(upper.begin(), upper.end(), check.begin());
         std::move(lower.begin(), lower.end(), check.begin() + upper.size());
         checkIncl(check);
-/*
+        //delete check; //!!!
+        /*
         std::cout << " unsorted: " << mVec << std::endl;
         for(int i = 0; i < check.size(); ++i){
             std::cout << "uc: " << check[i] <<std::endl;
         }
-*/
+        for(int i = 0; i < mPlanes.size(); ++i){
+            std::cout << "uc _ mPlanes: " << mPlanes[i] <<std::endl;
+        }
+        */
+
         std::vector<halfPlane> sorted_check{};
         polytopes new_pol;
-        sorted_check = reindex(check);
+        sorted_check = reindex(mPlanes);
         new_pol.mPlanes = sorted_check;
         new_pol.mVec = mVec;
         /*
@@ -127,38 +132,45 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
         return ch;
     }
 }
-
 //
 void polytopes::checkIncl(std::vector<halfPlane>& ch) {
     for (int i = 0; i < ch.size() - 1; ++i) {
         if (isCollinear(ch[i], ch[i + 1]) && !oppositeSide(ch[i], ch[i + 1])) {
             halfPlane min = ch[i];
             do {
-                if (min.C > ch[i+1].C) //min.C > ch[i+1].C // simCoefficient(ch[i+1], min)
+                if (simCoefficient(ch[i+1], min)) //min.C > ch[i+1].C // simCoefficient(ch[i+1], min)
                 {
                     min = ch[i+1];
                 }
                 ++i;
             } while (isCollinear(ch[i], ch[i+1]) && !oppositeSide(ch[i], ch[i + 1]));
+            //std::cout <<"in checkIncl after Sim Coef"<< min << std::endl;
+            //std::cout <<"in checkIncl "<< min.site << std::endl;
             mPlanes.emplace_back(min);
             continue;
         }
         else {
             mPlanes.emplace_back(ch[i]);//min
+            //std::cout <<"in else checkIncl after Sim Coef"<< ch[i] << std::endl;
+            //std::cout <<"in else checkIncl "<< ch[i].site << std::endl;
         }
     }
     if (isCollinear(mPlanes.back(), ch[ch.size()-1])) {
         if ((mPlanes.back().C>ch[ch.size()-1].C) && !oppositeSide(mPlanes.back(), ch[ch.size()-1]))  // simCoefficient(ch[i+1], min)
         {
             mPlanes.pop_back();
+
             mPlanes.emplace_back(ch[ch.size()-1]);
         } else if (oppositeSide(mPlanes.back(), ch[ch.size()-1]))
         {
+
             mPlanes.emplace_back(ch[ch.size()-1]);
         }
     } else {
+
         mPlanes.emplace_back(ch[ch.size()-1]);
     }
+
 }
 
 
@@ -209,7 +221,6 @@ bool simCoefficient(halfPlane& hp1, halfPlane& hp2) {
             return hp1.C < hp2.C;
         }
     }
-
 }
 //
 bool isCollinear(halfPlane &hp1, halfPlane &hp2) {

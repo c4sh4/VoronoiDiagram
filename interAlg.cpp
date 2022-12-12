@@ -10,7 +10,7 @@ void interAlg::getIntersection(polytopes& pt)
 {
     for (auto hp : pt.mPlanes)
     {
-        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp) && !Collinear(deq.front(),deq.back()))
+        while (deq.size() > 1 && !checkinOld(deq.at(deq.size()-2), deq.back(), hp))
         {
             if ((oppositeSide(deq.at(deq.size()-2), deq.back()) && isCollinear(deq.at(deq.size()-2), deq.back())))
             {
@@ -122,8 +122,18 @@ void interAlg::getVertexes() {
     auto it = deq.begin();
     if (deq.size() > 2) {
         Vec firstVert;
+        int i = 1;
+        int par = 0;
         for (int m=0, p=1, a=2; m < deq.size(); ++m, ++p, ++a)
         {
+            /*
+            std::cout << "---------------- " << std::endl;
+            std::cout << "deq is: " << deq.at(m) << std::endl;
+            std::cout << "deq size is: " << deq.size() << std::endl;
+            std::cout << "m is: " << m << std::endl;
+            std::cout << "deq at m is: " << deq.at(m) << std::endl;
+            std::cout << "deq at m+1 is: " << deq.at(m+1) << std::endl;
+            */
             if (p == deq.size()){
                 p = 0;
             }
@@ -132,16 +142,18 @@ void interAlg::getVertexes() {
             }
             if (checkinOld(deq.at(m), deq.at(p), deq.at(a)))
             {
+                if (!Collinear(deq.at(m), deq.at(m+1))){
                 firstVert = vert(deq.at(m), deq.at(m+1));
                 //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
                 //std::cout << "vert in vertushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
                 //it++;
-                break;
+                par = m;
+                break;}
             }
         }
+
         //std::cout << "firstVert!!" << firstVert << std::endl;
         vertex.emplace_back(firstVert);
-        int i = 1;
         do {
 
             if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkinOld(deq.at(i-1), deq.at(i), deq.at(i+1))){
@@ -150,14 +162,16 @@ void interAlg::getVertexes() {
             }
             // Удаление полуплоскости, которая не принадлежить ячейке, но проходит через одну из вершин!
             // (!) не комментить
-            else if ((firstVert == vert(deq.at(i), deq.at(i+1))))
+            else if ((firstVert == vert(deq.at(i), deq.at(i+1))) && par!=i)
             {
+                //std::cout << "=) sluchilsya erase" << std::endl;
+                //std::cout << "=) " << (it+1)->C << std::endl;
                 deq.erase((it+1));
                 --i;
                 it--;
             }
             else {
-                if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)))
+                if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)) && par != i)
                 {
                     vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
                     //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
