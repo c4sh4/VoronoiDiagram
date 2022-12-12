@@ -43,7 +43,7 @@ public:
     std::vector<halfPlane> reindex(std::vector<halfPlane> &ch);
 };
 bool isCollinear(halfPlane& hp1, halfPlane& hp2);
-bool simCoefficient(halfPlane& hp1, halfPlane& hp2);
+bool simCoefficient(halfPlane& hp1, halfPlane& hp2, Vec& site);
 
 //clas of sites from input
 class points{
