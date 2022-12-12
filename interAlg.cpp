@@ -183,7 +183,6 @@ void interAlg::getVertexes() {
             //std::cout << "zabavnoye peresecheniye" << std::endl;
             //std::cout << "=) " << deq.back() << std::endl;
             deq.pop_back();
-            --i;
             it--;
         }
 
