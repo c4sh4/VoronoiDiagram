@@ -186,11 +186,11 @@ void interAlg::getVertexes() {
             it--;
         }
 
-        if (!(firstVert == vert(deq.front(), deq.back())))
+        if (!(firstVert == vert(deq.front(), deq.back())) && vert(deq.front(), deq.back()).x == vert(deq.front(), deq.back()).x)
         {
             for(int j =1; j < deq.size()-1;++j) {
                 if (checkinOld(deq.front(), deq.back(), deq[j]) && !(vert(deq.front(), deq.back()) == vertex.back())){
-                    //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
+                    std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
             }
         }
