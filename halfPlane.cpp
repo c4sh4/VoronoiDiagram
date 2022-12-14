@@ -117,7 +117,7 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     {
         k+=1;
         std::vector<halfPlane> ch2;
-        std::cout<<"sozdali"<<std::endl;
+        //std::cout<<"sozdali"<<std::endl;
         int i = 0;
         for (int j =0; j < ch.size();++j)
         {
