@@ -110,6 +110,23 @@ Vec interAlg::FirstVert(){
     return firstVert;
 }
 //
+bool interAlg::InfNanVertex(halfPlane& hp1, halfPlane& hp2) {
+    if (!(vert(hp1, hp2).x == vert(hp1, hp2).x
+       && vert(hp1, hp2).y == vert(hp1, hp2).y))
+    {
+        //std::cout << "v == v " << vert(hp1, hp2) << std::endl;
+        return false;
+    }
+    else if (std::isinf(vert(hp1, hp2).x)
+              && std::isinf(vert(hp1, hp2).y))
+    {
+        //std::cout << "v isinf " << vert(hp1, hp2) << std::endl;
+        return false;
+    }
+    //std::cout << "v "<< vert(hp1, hp2) << std::endl;
+    return true;
+}
+//
 void interAlg::getVertexes() {
     auto it = deq.begin();
     if (deq.size() > 2) {
@@ -163,10 +180,11 @@ void interAlg::getVertexes() {
                 it--;
             }
             else {
-                if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)) && par != i)
+                if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)) &&
+                par != i && InfNanVertex(deq.at(i), deq.at(i+1)))
                 {
-                    vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
                     //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
+                    vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
                     firstVert = vert(deq.at(i), deq.at(i+1));
                 }
             }
@@ -186,12 +204,11 @@ void interAlg::getVertexes() {
             it--;
         }
         //check na nan\inf
-        if (!(firstVert == vert(deq.front(), deq.back())) && vert(deq.front(), deq.back()).x == vert(deq.front(), deq.back()).x
-        && vert(deq.front(),deq.back()).y == vert(deq.front(), deq.back()).y)
+        if (!(firstVert == vert(deq.front(), deq.back())) && InfNanVertex(deq.front(), deq.back()))
         {
             for(int j =1; j < deq.size()-1;++j) {
                 if (checkinOld(deq.front(), deq.back(), deq[j]) && !(vert(deq.front(), deq.back()) == vertex.back())){
-                    std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
+                    //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                     vertex.emplace_back(vert(deq.front(), deq.back()));}
             }
         }

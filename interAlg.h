@@ -37,6 +37,8 @@ public:
     bool checkForLastDot(halfPlane &hp1, halfPlane &hp2);
 
     bool checkForLastDot(halfPlane &front, halfPlane &back, halfPlane &candidate);
+
+    bool InfNanVertex(halfPlane &hp1, halfPlane &hp2);
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);
