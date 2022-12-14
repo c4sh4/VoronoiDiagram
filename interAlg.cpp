@@ -185,7 +185,7 @@ void interAlg::getVertexes() {
             deq.pop_back();
             it--;
         }
-
+        //check na nan\inf
         if (!(firstVert == vert(deq.front(), deq.back())) && vert(deq.front(), deq.back()).x == vert(deq.front(), deq.back()).x)
         {
             for(int j =1; j < deq.size()-1;++j) {
