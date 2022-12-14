@@ -137,8 +137,9 @@ void polytopes::checkIncl(std::vector<halfPlane>& ch) {
     for (int i = 0; i < ch.size() - 1; ++i) {
         if (isCollinear(ch[i], ch[i + 1]) && !oppositeSide(ch[i], ch[i + 1])) {
             halfPlane min = ch[i];
+            //std::cout << mVec << std::endl;
             do {
-                if (simCoefficient(min, ch[+1], mVec)) //min.C > ch[i+1].C // simCoefficient(ch[i+1], min)
+                if (simCoefficient(min, ch[i+1], mVec)) //min.C > ch[i+1].C // dist1 > dist2
                 {
                     //std::cout <<"in checkIncl "<< min.site << std::endl;
                     min = ch[i+1];
@@ -210,8 +211,13 @@ bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3) {
 //special function to check non-obvious exceptions
 bool simCoefficient(halfPlane& hp1, halfPlane& hp2, Vec& site) {
     double dist1, dist2;
-    dist1 = (fabs(hp1.A * site.x + hp1.B * site.x + hp1.C))/(sqrt(hp1.A*hp1.A+hp1.B * hp1.B));
-    dist2 = (fabs(hp2.A * site.x + hp2.B * site.x + hp2.C))/(sqrt(hp2.A*hp2.A+hp2.B * hp2.B));
+    //std::cout<<site << std::endl;
+    dist1 = (fabs(hp1.A * site.x + hp1.B * site.y + hp1.C))/(sqrt(hp1.A*hp1.A+hp1.B * hp1.B));
+    dist2 = (fabs(hp2.A * site.x + hp2.B * site.y + hp2.C))/(sqrt(hp2.A*hp2.A+hp2.B * hp2.B));
+    //std::cout << "dist 1 is: " << dist1 << std::endl;
+    //std::cout << hp1.A << " " << hp1.B << " " << hp1.C << std::endl;
+    //std::cout << "dist 2 is: " << dist2 << std::endl;
+    //std::cout << hp2.A << " " << hp2.B << " " << hp2.C << std::endl;
     return(dist1 > dist2);
 }
 //
