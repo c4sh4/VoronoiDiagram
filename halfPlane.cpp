@@ -65,6 +65,7 @@ polytopes polytopes::sortPolytopes() {
         std::move(upper.begin(), upper.end(), check.begin());
         std::move(lower.begin(), lower.end(), check.begin() + upper.size());
         checkIncl(check);
+        //std::cout << " unsorted: " << mVec << std::endl;
         //delete check; //!!!
         /*
         std::cout << " unsorted: " << mVec << std::endl;
@@ -81,12 +82,16 @@ polytopes polytopes::sortPolytopes() {
         sorted_check = reindex(mPlanes);
         new_pol.mPlanes = sorted_check;
         new_pol.mVec = mVec;
+        //std::cout << "mVec ch: " << new_pol.mVec << std::endl;
+        //std::cout << "sorted ch: " << std::endl;
         /*
-        std::cout << "sorted ch: " << std::endl;
         for(int i = 0; i < sorted_check.size(); ++i){
             std::cout << "sc: " << sorted_check[i] <<std::endl;
         }
         */
+        /*for(int i = 0; i < sorted_check.size(); ++i){
+            std::cout << "new_pol: " << sorted_check[i] <<std::endl;
+        }*/
         return new_pol;
     }
 }
@@ -112,23 +117,26 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     {
         k+=1;
         std::vector<halfPlane> ch2;
-        //std::cout<<"sozdali"<<std::endl;
+        std::cout<<"sozdali"<<std::endl;
         int i = 0;
         for (int j =0; j < ch.size();++j)
         {
             unsigned int z;
             z = (i+k)%size;
             //if (z >= size)
-
             ch2.push_back(ch[z]);
             //ch2.push_back(ch[z]);
-
             ++i;
             //std::cout<<ch2[j]<<std::endl;
         }
-
+        /*
+        for(int j = 0; j < ch2.size(); ++j){
+            std::cout << "ch2: " << ch2[j] <<std::endl;
+        }*/
         return ch2;
-    } else {
+    }
+    else
+    {
         return ch;
     }
 }
@@ -142,6 +150,7 @@ void polytopes::checkIncl(std::vector<halfPlane>& ch) {
                 if (simCoefficient(min, ch[i+1], mVec)) //min.C > ch[i+1].C // dist1 > dist2
                 {
                     //std::cout <<"in checkIncl "<< min.site << std::endl;
+                    //std::cout <<"in checkIncl propuskaem "<< min << std::endl;
                     min = ch[i+1];
                 }
                 ++i;
@@ -158,14 +167,18 @@ void polytopes::checkIncl(std::vector<halfPlane>& ch) {
         }
     }
     if (isCollinear(mPlanes.back(), ch[ch.size()-1])) {
-        if ((mPlanes.back().C>ch[ch.size()-1].C) && !oppositeSide(mPlanes.back(), ch[ch.size()-1]))  // simCoefficient(ch[i+1], min)
+        if (simCoefficient(mPlanes.back(), ch[ch.size()-1], mVec) && !oppositeSide(mPlanes.back(), ch[ch.size()-1]))  // simCoefficient(ch[i+1], min)
         {
-            mPlanes.pop_back();
 
+            //std::cout<< "nado podumat' " << mPlanes.back() << std::endl;
+            //std::cout<< "back ' " << mPlanes.back() << std::endl;
+            //std::cout<< "size-1' " << ch[ch.size()-1] << std::endl;
+            mPlanes.pop_back();
+            //std::cout<< "nado podumat' " << mPlanes.back() << std::endl;
             mPlanes.emplace_back(ch[ch.size()-1]);
         } else if (oppositeSide(mPlanes.back(), ch[ch.size()-1]))
         {
-
+            //std::cout<< "nado podumat2' " << ch[ch.size()-1] << std::endl;
             mPlanes.emplace_back(ch[ch.size()-1]);
         }
     } else {
