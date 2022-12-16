@@ -135,6 +135,8 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
         }*/
         return ch2;
     }
+
+
     else
     {
         return ch;

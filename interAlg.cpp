@@ -133,6 +133,18 @@ void interAlg::getVertexes() {
         Vec firstVert;
         int i = 1;
         int par = 0;
+        //checkForFirstDot =)
+        if (checkForLastDot(deq.front(), deq.at(1), deq.back()) && deq.size() > 3)
+        {
+            //std::cout << "SITE " << deq.back().site << std::endl;
+            //std::cout << "back " << deq.back() << std::endl;
+            //std::cout << "front " << deq.front() << std::endl;
+            //std::cout << "front+1 " <<  deq.at(1) << std::endl;
+            //std::cout << "zabavnoye peresecheniye" << std::endl;
+            //std::cout << "=) " << deq.back() << std::endl;
+            deq.pop_front();
+            it++;
+        }
         for (int m=0, p=1, a=2; m < deq.size(); ++m, ++p, ++a)
         {
             /*
