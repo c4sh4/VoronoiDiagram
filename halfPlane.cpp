@@ -72,21 +72,20 @@ polytopes polytopes::sortPolytopes() {
         for(int i = 0; i < check.size(); ++i){
             std::cout << "uc: " << check[i] <<std::endl;
         }
-        for(int i = 0; i < mPlanes.size(); ++i){
-            std::cout << "uc _ mPlanes: " << mPlanes[i] <<std::endl;
-        }
         */
+
 
         std::vector<halfPlane> sorted_check{};
         polytopes new_pol;
         sorted_check = reindex(mPlanes);
         new_pol.mPlanes = sorted_check;
         new_pol.mVec = mVec;
+
         //std::cout << "mVec ch: " << new_pol.mVec << std::endl;
         //std::cout << "sorted ch: " << std::endl;
         /*
         for(int i = 0; i < sorted_check.size(); ++i){
-            std::cout << "sc: " << sorted_check[i] <<std::endl;
+            std::cout << "sc: " << new_pol.mPlanes[i] <<std::endl;
         }
         */
         /*for(int i = 0; i < sorted_check.size(); ++i){
@@ -98,7 +97,7 @@ polytopes polytopes::sortPolytopes() {
 
 //
 std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
-    int k =0;
+    int k = 0;
     unsigned int size = ch.size();
     for (int i = 0;i < ch.size()-1;++i)
     {
@@ -112,10 +111,14 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
         }
         k+=1;
     }
-    //std::cout << "k is: " << k << std::endl;
-    if (k != ch.size()-1)
-    {
+    Vec v1(ch.at(ch.size()-2).A, ch.at(ch.size()-2).B);
+    Vec v2(ch.back().A,ch.back().B);
+    if (v2.getDet(v1) < 0)
         k+=1;
+    //std::cout << "k is: " << k << std::endl;
+    if (k != ch.size())
+    {
+
         std::vector<halfPlane> ch2;
         //std::cout<<"sozdali"<<std::endl;
         int i = 0;
@@ -135,8 +138,6 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
         }*/
         return ch2;
     }
-
-
     else
     {
         return ch;
@@ -208,7 +209,7 @@ bool afterSort(halfPlane& hp1, halfPlane& hp2, halfPlane& hp3) {
     //std::cout << "v1 dot v2 : " <<v1.getDot(v2) << std::endl;
     //std::cout << "v1 dot v3 : " << v1.getDot(v3) << std::endl;
     //std::cout << "v2 dot v3 : " << v2.getDot(v3) << std::endl;
-    if (v1.getDot(v2) > 0 && v1.getDot(v2) < v1.getDot(v3))
+    if (v1.getDet(v2) > 0 && v1.getDet(v2) < v1.getDet(v3))
     {
             return true;
     }

@@ -136,14 +136,14 @@ void interAlg::getVertexes() {
         //checkForFirstDot =)
         if (checkForLastDot(deq.front(), deq.at(1), deq.back()) && deq.size() > 3)
         {
-            //std::cout << "SITE " << deq.back().site << std::endl;
+            //std::cout << "SITE First " << deq.front().site << std::endl;
             //std::cout << "back " << deq.back() << std::endl;
             //std::cout << "front " << deq.front() << std::endl;
             //std::cout << "front+1 " <<  deq.at(1) << std::endl;
             //std::cout << "zabavnoye peresecheniye" << std::endl;
             //std::cout << "=) " << deq.back() << std::endl;
-            deq.pop_front();
-            it++;
+            //deq.pop_front();
+            //it++;
         }
         for (int m=0, p=1, a=2; m < deq.size(); ++m, ++p, ++a)
         {
@@ -185,11 +185,12 @@ void interAlg::getVertexes() {
             // (!) не комментить
             else if ((firstVert == vert(deq.at(i), deq.at(i+1))) && par != i)
             {
-                //std::cout << "=) sluchilsya erase" << std::endl;
+
+                //std::cout << "site erase" << (it+1)->site << std::endl;
                 //std::cout << "=) " <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
                 deq.erase((it+1));
                 --i;
-                it--;
+                //it--;
             }
             else {
                 if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)) &&
@@ -209,11 +210,10 @@ void interAlg::getVertexes() {
         {
             //std::cout << "back " << deq.back() << std::endl;
             //std::cout << "back-1 " <<  deq.at(deq.size()-2) << std::endl;
-            //std::cout << "SITE " << deq.back().site << std::endl;
+            std::cout << "SITE last" << deq.back().site << std::endl;
             //std::cout << "zabavnoye peresecheniye" << std::endl;
             //std::cout << "=) " << deq.back() << std::endl;
             deq.pop_back();
-            it--;
         }
         //check na nan\inf
         if (!(firstVert == vert(deq.front(), deq.back())) && InfNanVertex(deq.front(), deq.back()))
@@ -300,6 +300,7 @@ void interAlg::Voronoi(std::vector<polytopes> cells) {
         alg_for_site.getVertexes();
         VorAlg.emplace_back(alg_for_site);
     }
+
     for (auto & j : VorAlg) {
         std::cout << "Site: "<< j.post << std::endl;
         for (auto & i : j.vertex) {
@@ -309,4 +310,13 @@ void interAlg::Voronoi(std::vector<polytopes> cells) {
             std::cout << "Polytopes: " << i << "\n";
         }
     }
+    /*
+    std::cout << "Site: "<< VorAlg[3].post << std::endl;
+    for (auto & i : VorAlg[3].vertex) {
+        std::cout << "Vertex: " << i << std::endl;
+    }
+    for (auto & i : VorAlg[3].deq) {
+        std::cout << "Polytopes: " << i << "\n";
+    }
+     */
 }
