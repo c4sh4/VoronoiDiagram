@@ -190,7 +190,7 @@ void interAlg::getVertexes() {
                 //std::cout << "=) " <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
                 deq.erase((it+1));
                 --i;
-                //it--;
+                it--;
             }
             else {
                 if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)) &&
