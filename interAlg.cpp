@@ -201,8 +201,8 @@ void interAlg::getVertexes() {
                     firstVert = vert(deq.at(i), deq.at(i+1));
                 }
             }
-            ++i;
-            it+=1;
+            //++i;
+            //it+=1;
         } while (i < deq.size()-1);
 
 
