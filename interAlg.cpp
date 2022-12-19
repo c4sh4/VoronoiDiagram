@@ -129,7 +129,7 @@ bool interAlg::InfNanVertex(halfPlane& hp1, halfPlane& hp2) {
 //
 void interAlg::getVertexes() {
     auto it = deq.begin();
-    std::cout<<"vertexes" << std::endl;
+    //std::cout<<"vertexes" << std::endl;
     if (deq.size() > 2) {
         Vec firstVert;
         int i = 0;
@@ -177,22 +177,22 @@ void interAlg::getVertexes() {
             }
             else
             {
-                std::cout<< "erase in first Vert: " << it->A << " " << it->B << " " << it->C << std::endl;
+                //std::cout<< "erase in first Vert: " << it->A << " " << it->B << " " << it->C << std::endl;
                 deq.erase(it);
                 it--;
                 --i;
-                std::cout << i << std::endl;
+                //std::cout << i << std::endl;
             }
         } else { break;}
         }
         if ( i == deq.size()){
             i=0;
         }
-        std::cout << "firstVert!! " << firstVert << std::endl;
+        //std::cout << "firstVert!! " << firstVert << std::endl;
         vertex.emplace_back(firstVert);
 
-        std::cout << "it before while: " << it->A << ", " << it->B << ", " << it->C << std::endl;
-        std::cout << "i before while: " << i << std::endl;
+        //std::cout << "it before while: " << it->A << ", " << it->B << ", " << it->C << std::endl;
+        //std::cout << "i before while: " << i << std::endl;
 
         //std::cout << "proverka x : " << firstVert.x << " "<< vert(deq.at(i), deq.at(i + 1)).x << std::endl;
         //std::cout << "proverka y : " << firstVert.y << " "<< vert(deq.at(i), deq.at(i + 1)).y << std::endl;
