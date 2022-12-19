@@ -254,8 +254,8 @@ void interAlg::getVertexes() {
                     if (checkinOld(deq.front(), deq.back(), deq[j]) &&
                         !(vert(deq.front(), deq.back()) == vertex.back())) {
 
-                        std::cout <<"site in emplace " << it->site <<std::endl;
-                        std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
+                        //std::cout <<"site in emplace " << it->site <<std::endl;
+                        //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                         vertex.emplace_back(vert(deq.front(), deq.back()));
                     }
                 }

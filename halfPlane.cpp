@@ -84,11 +84,11 @@ polytopes polytopes::sortPolytopes() {
 
         //std::cout << "mVec ch: " << new_pol.mVec << std::endl;
         //std::cout << "sorted ch: " << std::endl;
-        /*
+
         for(int i = 0; i < sorted_check.size(); ++i){
-            std::cout << "sc: " << new_pol.mPlanes[i] <<std::endl;
+            //std::cout << "sc: " << new_pol.mPlanes[i] <<std::endl;
         }
-        */
+
         /*for(int i = 0; i < sorted_check.size(); ++i){
             std::cout << "new_pol: " << sorted_check[i] <<std::endl;
         }*/
@@ -99,6 +99,7 @@ polytopes polytopes::sortPolytopes() {
 //
 std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     int k = 0;
+    int brek = 0;
     unsigned int size = ch.size();
     for (int i = 0;i < ch.size()-1;++i)
     {
@@ -108,6 +109,7 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
             //std::cout << "mi bili v breke: " << ch[i] << std::endl;
             //std::cout << "mi bili v breke: " << ch[i+1] << std::endl;
             //std::cout << "k: " << k << std::endl;
+            brek = 1;
             break;
         }
         k+=1;
@@ -121,7 +123,7 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
 
     k+=1;
 
-    if (v3.getDet(v4) <= 0){
+    if (v3.getDet(v4) <= 0 && brek==0){
         k-=1;
         //std::cout << "=)" << std::endl;
     }
