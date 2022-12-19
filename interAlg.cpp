@@ -93,7 +93,7 @@ Vec interAlg::FirstVert(){
         if (checkinOld(deq.at(m), deq.at(p), deq.at(a)))
         {
             firstVert = vert(deq.at(m), deq.at(m+1));
-            std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
+            //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
             //std::cout << "vert in verushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
             //it++;
             ++p;
@@ -131,7 +131,7 @@ void interAlg::getVertexes() {
     auto it = deq.begin();
     if (deq.size() > 2) {
         Vec firstVert;
-        int i = 1;
+        int i = 0;
         int par = 0;
         //checkForFirstDot =)
         if (checkForLastDot(deq.front(), deq.at(1), deq.back()) && deq.size() > 3)
@@ -142,10 +142,9 @@ void interAlg::getVertexes() {
             //std::cout << "front+1 " <<  deq.at(1) << std::endl;
             //std::cout << "zabavnoye peresecheniye" << std::endl;
             //std::cout << "=) " << deq.back() << std::endl;
-            //deq.pop_front();
-            //it++;
+            //deq.erase(it+1);
         }
-        for (int m=0, p=1, a=2; m < deq.size(); ++m, ++p, ++a)
+        for (int m=0, p=1, a=2; m < deq.size(); ++p, ++a)
         {
             /*
             std::cout << "---------------- " << std::endl;
@@ -161,67 +160,88 @@ void interAlg::getVertexes() {
             if (a == deq.size()){
                 a = 0;
             }
-            if (checkinOld(deq.at(m), deq.at(p), deq.at(a)))
+            it++;
+            ++i;
+            if (!checkForLastDot(deq.at(m), deq.at(p), deq.at(a)))
             {
-                if (!isCollinear(deq.at(m), deq.at(m+1))){
-                firstVert = vert(deq.at(m), deq.at(m+1));
+                firstVert = vert(deq.at(m), deq.at(p));
+                //std::cout << "pl: " << deq.at(m).site << std::endl;
                 //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
+                //std::cout << "second hp: " << deq.at(p).A << " " << deq.at(p).B << " " << deq.at(p).C << " firstVert: " << firstVert << std::endl;
                 //std::cout << "vert in vertushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
-                //it++;
                 par = m;
-                break;}
+                break;
             }
-        }
-
-        //std::cout << "firstVert!!" << firstVert << std::endl;
-        vertex.emplace_back(firstVert);
-        do {
-
-            if (afterSort(deq.at(i-1), deq.at(i), deq.at(i+1)) && !checkinOld(deq.at(i-1), deq.at(i), deq.at(i+1))){
-                //std::cout << " !!! " << vertex.back() << std::endl;
-                //vertex.pop_back();
-            }
-            // Удаление полуплоскости, которая не принадлежить ячейке, но проходит через одну из вершин!
-            // (!) не комментить
-            else if ((firstVert == vert(deq.at(i), deq.at(i+1))) && par != i)
+            else
             {
-
-                //std::cout << "site erase" << (it+1)->site << std::endl;
-                //std::cout << "=) " <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
-                deq.erase((it+1));
-                --i;
+                //std::cout<< "erase in first Vert: " << it->A << " " << it->B << " " << it->C << std::endl;
+                deq.erase(it);
                 it--;
+                --i;
             }
-            else {
-                if(checkinOld(deq.at(i), deq.at(i+1), deq.at(i-1)) &&
-                par != i && InfNanVertex(deq.at(i), deq.at(i+1)))
-                {
-                    //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i+1)) << std::endl;
-                    vertex.emplace_back(vert(deq.at(i), deq.at(i+1)));
-                    firstVert = vert(deq.at(i), deq.at(i+1));
-                }
-            }
-            //++i;
-            //it+=1;
-        } while (i < deq.size()-1);
-
-
-        if (checkForLastDot(deq.front(), deq.at(deq.size()-2), deq.back()))
-        {
-            //std::cout << "back " << deq.back() << std::endl;
-            //std::cout << "back-1 " <<  deq.at(deq.size()-2) << std::endl;
-            std::cout << "SITE last" << deq.back().site << std::endl;
-            //std::cout << "zabavnoye peresecheniye" << std::endl;
-            //std::cout << "=) " << deq.back() << std::endl;
-            deq.pop_back();
         }
-        //check na nan\inf
-        if (!(firstVert == vert(deq.front(), deq.back())) && InfNanVertex(deq.front(), deq.back()))
-        {
-            for(int j =1; j < deq.size()-1;++j) {
-                if (checkinOld(deq.front(), deq.back(), deq[j]) && !(vert(deq.front(), deq.back()) == vertex.back())){
-                    //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
-                    vertex.emplace_back(vert(deq.front(), deq.back()));}
+        if ( i == deq.size()){
+            i=0;
+        }
+        //std::cout << "firstVert!! " << firstVert << std::endl;
+        vertex.emplace_back(firstVert);
+
+        //std::cout << "it before while: " << it->A << ", " << it->B << ", " << it->C << std::endl;
+        //std::cout << "i before while: " << i << std::endl;
+
+        //std::cout << "proverka x : " << firstVert.x << " "<< vert(deq.at(i), deq.at(i + 1)).x << std::endl;
+        //std::cout << "proverka y : " << firstVert.y << " "<< vert(deq.at(i), deq.at(i + 1)).y << std::endl;
+
+        if (deq.size() > 2) {
+            //std::cout << "deq.size > 2 :" << deq.size() << std::endl;
+            do {
+                // Удаление полуплоскости, которая не принадлежить ячейке, но проходит через одну из вершин!
+                // (!) не комментить
+                //checkForLastDot(deq.at(i), deq.at(i+1), deq.at(i-1))
+                //std::cout << firstVert << std::endl;
+
+                if (firstVert == vert(deq.at(i), deq.at(i + 1)) && i != par) {
+                    //std::cout << "first " << firstVert << std::endl;
+                    //std::cout << "site erase " << (it)->site << std::endl;
+                    //std::cout << "it+1 for erase " << (it + 1)->A << ", " << (it + 1)->B << ", " << (it + 1)->C << std::endl;
+                    deq.erase((it + 1));
+                    --i;
+                    it -= 2;
+                    //std::cout << "new it" <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
+                } else {
+                    //std::cout << "proverili pokooddinatno: " << std::endl;
+                    if (par != i
+                        && InfNanVertex(deq.at(i), deq.at(i + 1))) {
+                        //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i + 1)) << std::endl;
+                        vertex.emplace_back(vert(deq.at(i), deq.at(i + 1)));
+                        firstVert = vert(deq.at(i), deq.at(i + 1));
+                    }
+                }
+
+                ++i;
+                it++;
+                //std::cout << "it after cycle: " << (it)->A << ", " << (it)->B << ", " << (it)->C << std::endl;
+
+            } while (i < deq.size() - 1 && deq.size() > 2);
+
+
+            if (checkForLastDot(deq.front(), deq.at(deq.size() - 2), deq.back())) {
+                //std::cout << "back " << deq.back() << std::endl;
+                //std::cout << "back-1 " <<  deq.at(deq.size()-2) << std::endl;
+                //std::cout << "SITE last" << deq.back().site << std::endl;
+                //std::cout << "zabavnoye peresecheniye" << std::endl;
+                //std::cout << "=) " << deq.back() << std::endl;
+                deq.pop_back();
+            }
+            //check na nan\inf
+            if (!(firstVert == vert(deq.front(), deq.back())) && InfNanVertex(deq.front(), deq.back())) {
+                for (int j = 1; j < deq.size() - 1; ++j) {
+                    if (checkinOld(deq.front(), deq.back(), deq[j]) &&
+                        !(vert(deq.front(), deq.back()) == vertex.back())) {
+                        //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
+                        vertex.emplace_back(vert(deq.front(), deq.back()));
+                    }
+                }
             }
         }
     }  else {

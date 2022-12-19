@@ -67,6 +67,7 @@ polytopes polytopes::sortPolytopes() {
         checkIncl(check);
         //std::cout << " unsorted: " << mVec << std::endl;
         //delete check; //!!!
+
         /*
         std::cout << " unsorted: " << mVec << std::endl;
         for(int i = 0; i < check.size(); ++i){
@@ -88,6 +89,7 @@ polytopes polytopes::sortPolytopes() {
             std::cout << "sc: " << new_pol.mPlanes[i] <<std::endl;
         }
         */
+
         /*for(int i = 0; i < sorted_check.size(); ++i){
             std::cout << "new_pol: " << sorted_check[i] <<std::endl;
         }*/
@@ -113,9 +115,17 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     }
     Vec v1(ch.at(ch.size()-2).A, ch.at(ch.size()-2).B);
     Vec v2(ch.back().A,ch.back().B);
-    if (v2.getDet(v1) < 0)
+    //std:: cout << ch.at(ch.size()-2).A <<  ch.at(ch.size()-2).B << ch.at(ch.size()-2).C << std::endl;
+    //std:: cout <<ch.back().A << ch.back().B << ch.back().C << std::endl;
+    /*
+    if (v2.getDet(v1) > 0) // !!!!!!!!!!!!!!!!!!!
+    {
+        std::cout << "k+1 in if"<< std::endl;
         k+=1;
+    }
     //std::cout << "k is: " << k << std::endl;
+    */
+    k+=1;
     if (k != ch.size())
     {
 
