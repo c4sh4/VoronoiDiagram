@@ -82,13 +82,13 @@ polytopes polytopes::sortPolytopes() {
         new_pol.mPlanes = sorted_check;
         new_pol.mVec = mVec;
 
-        //std::cout << "mVec ch: " << new_pol.mVec << std::endl;
+        std::cout << "mVec ch: " << new_pol.mVec << std::endl;
         //std::cout << "sorted ch: " << std::endl;
-        /*
+
         for(int i = 0; i < sorted_check.size(); ++i){
             std::cout << "sc: " << new_pol.mPlanes[i] <<std::endl;
         }
-        */
+
 
         /*for(int i = 0; i < sorted_check.size(); ++i){
             std::cout << "new_pol: " << sorted_check[i] <<std::endl;
@@ -117,14 +117,14 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     Vec v2(ch.back().A,ch.back().B);
     //std:: cout << ch.at(ch.size()-2).A <<  ch.at(ch.size()-2).B << ch.at(ch.size()-2).C << std::endl;
     //std:: cout <<ch.back().A << ch.back().B << ch.back().C << std::endl;
-    /*
+
     if (v2.getDet(v1) > 0) // !!!!!!!!!!!!!!!!!!!
     {
         std::cout << "k+1 in if"<< std::endl;
         k+=1;
     }
     //std::cout << "k is: " << k << std::endl;
-    */
+
     k+=1;
     if (k != ch.size())
     {
