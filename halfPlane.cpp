@@ -118,11 +118,7 @@ std::vector<halfPlane> polytopes::reindex(std::vector<halfPlane>& ch) {
     //std:: cout << ch.at(ch.size()-2).A <<  ch.at(ch.size()-2).B << ch.at(ch.size()-2).C << std::endl;
     //std:: cout <<ch.back().A << ch.back().B << ch.back().C << std::endl;
 
-    if (v2.getDet(v1) > 0) // !!!!!!!!!!!!!!!!!!!
-    {
-        //std::cout << "k+1 in if"<< std::endl;
-        k+=1;
-    }
+
     //std::cout << "k is: " << k << std::endl;
 
     k+=1;
