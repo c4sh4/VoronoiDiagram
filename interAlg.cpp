@@ -146,8 +146,6 @@ void interAlg::getVertexes() {
             //deq.erase(it+1);
         }
         for (int m=0, p=1, a=2; m < deq.size(); ++p, ++a)
-
-        {if(deq.size()>2)
         {
             /*
             std::cout << "---------------- " << std::endl;
@@ -158,20 +156,27 @@ void interAlg::getVertexes() {
             std::cout << "deq at m+1 is: " << deq.at(m+1) << std::endl;
             */
             if (p == deq.size()){
+                //std::cout<<"p" << p <<std::endl;
                 p = 0;
             }
             if (a == deq.size()){
+                //std::cout<<"a" << a<<std::endl;
                 a = 0;
             }
             it++;
             ++i;
+            //std::cout << deq.at(m);
+            //std::cout << deq.at(p);
+            //std::cout << deq.at(a);
+            //std::cout << vert(deq.at(m), deq.at(p)) << std::endl;
+            //std::cout << vert(deq.at(m), deq.at(a)) << std::endl;
             if (!checkForLastDot(deq.at(m), deq.at(p), deq.at(a)))
             {
                 firstVert = vert(deq.at(m), deq.at(p));
                 //std::cout << "pl: " << deq.at(m).site << std::endl;
                 //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
                 //std::cout << "second hp: " << deq.at(p).A << " " << deq.at(p).B << " " << deq.at(p).C << " firstVert: " << firstVert << std::endl;
-                //std::cout << "vert in vertushka: " << vert(deq.at(0), deq.at(1)) << std::endl;
+                //std::cout << "vert in vertushka: " <<firstVert << std::endl;
                 par = m;
                 break;
             }
@@ -181,9 +186,14 @@ void interAlg::getVertexes() {
                 deq.erase(it);
                 it--;
                 --i;
+                --p;
+                --a;
                 //std::cout << i << std::endl;
             }
-        } else { break;}
+            if (deq.size() <=2){
+                break;
+            }
+
         }
         if ( i == deq.size()){
             i=0;
@@ -243,7 +253,9 @@ void interAlg::getVertexes() {
                 for (int j = 1; j < deq.size() - 1; ++j) {
                     if (checkinOld(deq.front(), deq.back(), deq[j]) &&
                         !(vert(deq.front(), deq.back()) == vertex.back())) {
-                        //std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
+
+                        std::cout <<"site in emplace " << it->site <<std::endl;
+                        std::cout <<"emplace in if = " << vert(deq.front(), deq.back()) <<std::endl;
                         vertex.emplace_back(vert(deq.front(), deq.back()));
                     }
                 }
