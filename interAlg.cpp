@@ -154,22 +154,32 @@ void interAlg::getVertexes() {
             std::cout << "m is: " << m << std::endl;
             std::cout << "deq at m is: " << deq.at(m) << std::endl;
             std::cout << "deq at m+1 is: " << deq.at(m+1) << std::endl;
+
+
+            std::cout<< deq.front().site << std::endl;
+            std::cout<<"p " << p <<std::endl;
+            std::cout<<"a " << a<<std::endl;
             */
+
             if (p == deq.size()){
                 //std::cout<<"p" << p <<std::endl;
                 p = 0;
             }
             if (a == deq.size()){
-                //std::cout<<"a" << a<<std::endl;
+
                 a = 0;
             }
             it++;
             ++i;
-            //std::cout << deq.at(m);
-            //std::cout << deq.at(p);
-            //std::cout << deq.at(a);
-            //std::cout << vert(deq.at(m), deq.at(p)) << std::endl;
-            //std::cout << vert(deq.at(m), deq.at(a)) << std::endl;
+
+            /*
+            std::cout << it->A << " " << it->B << " " << it->C << std::endl;
+            std::cout << deq.at(m);
+            std::cout << deq.at(p);
+            std::cout << deq.at(a);
+            std::cout << "mp vert " <<vert(deq.at(m), deq.at(p)) << std::endl;
+            std::cout << "ma vert "<<vert(deq.at(m), deq.at(a)) << std::endl;
+            */
             if (!checkForLastDot(deq.at(m), deq.at(p), deq.at(a)))
             {
                 firstVert = vert(deq.at(m), deq.at(p));
@@ -177,20 +187,24 @@ void interAlg::getVertexes() {
                 //std::cout << "m: " << m << " firstVert: " << firstVert << std::endl;
                 //std::cout << "second hp: " << deq.at(p).A << " " << deq.at(p).B << " " << deq.at(p).C << " firstVert: " << firstVert << std::endl;
                 //std::cout << "vert in vertushka: " <<firstVert << std::endl;
-                par = m;
+                par += 1;
                 break;
             }
             else
             {
                 //std::cout<< "erase in first Vert: " << it->A << " " << it->B << " " << it->C << std::endl;
                 deq.erase(it);
-                it--;
+                //it--; //???
                 --i;
-                --p;
                 --a;
+                --p;
                 //std::cout << i << std::endl;
             }
             if (deq.size() <=2){
+                //std::cout <<"deq.size() <=2" <<std::endl;
+                if (par < 1){
+                    firstVert = vert(deq.at(0), deq.at(1));
+                }
                 break;
             }
 
@@ -215,7 +229,7 @@ void interAlg::getVertexes() {
                 //checkForLastDot(deq.at(i), deq.at(i+1), deq.at(i-1))
                 //std::cout << firstVert << std::endl;
 
-                if (firstVert == vert(deq.at(i), deq.at(i + 1)) && i != par) {
+                if (firstVert == vert(deq.at(i), deq.at(i + 1))) {
                     //std::cout << "first " << firstVert << std::endl;
                     //std::cout << "site erase " << (it)->site << std::endl;
                     //std::cout << "it+1 for erase " << (it + 1)->A << ", " << (it + 1)->B << ", " << (it + 1)->C << std::endl;
@@ -225,8 +239,7 @@ void interAlg::getVertexes() {
                     //std::cout << "new it" <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
                 } else {
                     //std::cout << "proverili pokooddinatno: " << std::endl;
-                    if (par != i
-                        && InfNanVertex(deq.at(i), deq.at(i + 1))) {
+                    if (InfNanVertex(deq.at(i), deq.at(i + 1))) {
                         //std::cout << "emplace in else : " << vert(deq.at(i), deq.at(i + 1)) << std::endl;
                         vertex.emplace_back(vert(deq.at(i), deq.at(i + 1)));
                         firstVert = vert(deq.at(i), deq.at(i + 1));
