@@ -230,13 +230,21 @@ void interAlg::getVertexes() {
                 //std::cout << firstVert << std::endl;
 
                 if (firstVert == vert(deq.at(i), deq.at(i + 1))) {
+                    if (vert(deq.at(i-1), deq.at(i)) == vert(deq.at(i), deq.at(i+1))){
+                        deq.erase(it);
+                        //std::cout << "i-1 x i == i x i+1" << std::endl;
+                        --i;
+                        it--; //?
+                    } else {
                     //std::cout << "first " << firstVert << std::endl;
                     //std::cout << "site erase " << (it)->site << std::endl;
+                    //std::cout << "it in erase " <<(it)->A<<", " <<(it)->B << ", "<< (it)->C << std::endl;
                     //std::cout << "it+1 for erase " << (it + 1)->A << ", " << (it + 1)->B << ", " << (it + 1)->C << std::endl;
                     deq.erase((it + 1));
                     --i;
                     it -= 2;
                     //std::cout << "new it" <<(it+1)->A<<", " <<(it+1)->B << ", "<< (it+1)->C << std::endl;
+                    }
                 } else {
                     //std::cout << "proverili pokooddinatno: " << std::endl;
                     if (InfNanVertex(deq.at(i), deq.at(i + 1))) {
@@ -259,6 +267,7 @@ void interAlg::getVertexes() {
                 //std::cout << "SITE last" << deq.back().site << std::endl;
                 //std::cout << "zabavnoye peresecheniye" << std::endl;
                 //std::cout << "=) " << deq.back() << std::endl;
+                //std::cout << "in Check for lastDot: " << (it)->A << ", " << (it)->B << ", " << (it)->C << std::endl;
                 deq.pop_back();
             }
             //check na nan\inf
