@@ -135,7 +135,8 @@ void interAlg::getVertexes() {
         int i = 0;
         int par = 0;
         //checkForFirstDot =)
-        if (checkForLastDot(deq.front(), deq.at(1), deq.back()) && deq.size() > 3)
+        if (checkForFirstDot(deq.front(), deq.back(), deq.at(1))
+        && deq.size() > 3)
         {
             //std::cout << "SITE First " << deq.front().site << std::endl;
             //std::cout << "back " << deq.back() << std::endl;
@@ -143,7 +144,7 @@ void interAlg::getVertexes() {
             //std::cout << "front+1 " <<  deq.at(1) << std::endl;
             //std::cout << "zabavnoye peresecheniye" << std::endl;
             //std::cout << "=) " << deq.back() << std::endl;
-            //deq.erase(it+1);
+            deq.pop_front();
         }
         for (int m=0, p=1, a=2; m < deq.size(); ++p, ++a)
         {
@@ -290,6 +291,20 @@ void interAlg::getVertexes() {
 //
 bool interAlg::checkForLastDot(halfPlane& front, halfPlane& back, halfPlane& candidate){
     return(vert(front, back) == vert(front, candidate) && vert(front, candidate) == vert(back, candidate));
+}
+bool interAlg::checkForFirstDot(halfPlane& front, halfPlane& back, halfPlane& candidate){
+    if (vert(front, back) == vert(front, candidate) && vert(front, candidate) == vert(back, candidate)) {
+        Vec f(front.A, front.B);
+        Vec b(back.A, back.B);
+        Vec c(candidate.A, candidate.B);
+        if (f.getDet(b) <= 0) {
+            //std::cout << "f.Det(b)<=0" << std::endl;
+            return true;
+        }
+        else return false;
+    }
+    else return false;
+
 }
 //
 std::ostream& operator<<(std::ostream& os, const interAlg& alg) {
