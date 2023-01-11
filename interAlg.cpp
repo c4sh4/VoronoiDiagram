@@ -136,6 +136,7 @@ void interAlg::getVertexes() {
         int par = 0;
         //checkForFirstDot =)
         int ff_m = int(deq.size());
+        int f_m = 0; //flag for check first dot
         while (ff_m >=3)
         {
             if (checkForFirstDot(deq.front(), deq.back(), deq.at(1))
@@ -146,11 +147,13 @@ void interAlg::getVertexes() {
                 //std::cout << "front " << deq.front() << std::endl;
                 //std::cout << "front+1 " <<  deq.at(1) << std::endl;
                 //std::cout << "zabavnoye peresecheniye" << std::endl;
-                //std::cout << "=) " << deq.back() << std::endl;
+                //std::cout << "=) " << deq.front() << std::endl;
                 deq.pop_front();
+                f_m = 1;
             }
             ff_m-=1;
         }
+
         for (int m=0, p=1, a=2; m < deq.size(); ++p, ++a)
         {
             /*
@@ -199,11 +202,20 @@ void interAlg::getVertexes() {
             else
             {
                 //std::cout<< "erase in first Vert: " << it->A << " " << it->B << " " << it->C << std::endl;
-                deq.erase(it);
-                //it--; //???
-                --i;
-                --a;
-                --p;
+                if (f_m == 0)
+                    {
+                    deq.erase(it);
+                    //it--; //???
+                    --i;
+                    --a;
+                    --p;
+                }
+                else {
+                    deq.erase(it+1);
+                    --i;
+                    --a;
+                    --p;
+                }
                 //std::cout << i << std::endl;
             }
             if (deq.size() <=2){
