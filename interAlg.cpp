@@ -135,16 +135,21 @@ void interAlg::getVertexes() {
         int i = 0;
         int par = 0;
         //checkForFirstDot =)
-        if (checkForFirstDot(deq.front(), deq.back(), deq.at(1))
-        && deq.size() > 3)
+        int ff_m = int(deq.size());
+        while (ff_m >=3)
         {
-            //std::cout << "SITE First " << deq.front().site << std::endl;
-            //std::cout << "back " << deq.back() << std::endl;
-            //std::cout << "front " << deq.front() << std::endl;
-            //std::cout << "front+1 " <<  deq.at(1) << std::endl;
-            //std::cout << "zabavnoye peresecheniye" << std::endl;
-            //std::cout << "=) " << deq.back() << std::endl;
-            deq.pop_front();
+            if (checkForFirstDot(deq.front(), deq.back(), deq.at(1))
+            && deq.size() >= 3)
+            {
+                //std::cout << "SITE First " << deq.front().site << std::endl;
+                //std::cout << "back " << deq.back() << std::endl;
+                //std::cout << "front " << deq.front() << std::endl;
+                //std::cout << "front+1 " <<  deq.at(1) << std::endl;
+                //std::cout << "zabavnoye peresecheniye" << std::endl;
+                //std::cout << "=) " << deq.back() << std::endl;
+                deq.pop_front();
+            }
+            ff_m-=1;
         }
         for (int m=0, p=1, a=2; m < deq.size(); ++p, ++a)
         {

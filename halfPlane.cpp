@@ -88,10 +88,12 @@ polytopes polytopes::sortPolytopes() {
         for(int i = 0; i < sorted_check.size(); ++i){
             std::cout << "sc: " << new_pol.mPlanes[i] <<std::endl;
         }
-        /*
-        /*for(int i = 0; i < sorted_check.size(); ++i){
-            std::cout << "new_pol: " << sorted_check[i] <<std::endl;
-        }*/
+
+        */
+
+        //for(int i = 0; i < sorted_check.size(); ++i){
+        //    std::cout << "new_pol: " << sorted_check[i] <<std::endl;
+        //}
         return new_pol;
     }
 }
