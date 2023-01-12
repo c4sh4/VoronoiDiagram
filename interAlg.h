@@ -41,6 +41,8 @@ public:
     bool InfNanVertex(halfPlane &hp1, halfPlane &hp2);
 
     bool checkForFirstDot(halfPlane &front, halfPlane &back, halfPlane &candidate);
+
+    bool get_vertexes_fast(halfPlane &front, halfPlane &back);
 };
 //ostream
 std::ostream& operator<<(std::ostream& os, const interAlg& alg);
