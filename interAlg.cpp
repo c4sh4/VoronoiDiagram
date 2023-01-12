@@ -223,11 +223,25 @@ void interAlg::getVertexes() {
             }
 
             //check na nan\inf
+            /*
+            std::cout << "SITE IS: " << deq.back().site << std::endl;
+            std::cout << deq.front() <<std::endl;
+            std::cout << deq.back() <<std::endl;
+            std::cout << InfNanVertex(deq.front(), deq.back()) <<std::endl;
+            std::cout << !(firstVert == vert(deq.front(), deq.back())) <<std::endl;
+            */
+            if (firstVert == vert(deq.front(), deq.back())){
+                flag_for_last_vert = 1;
+            }
             if (!(firstVert == vert(deq.front(), deq.back())) && InfNanVertex(deq.front(), deq.back())) {
+                //std::cout << "_______________" << std::endl;
+                //std::cout << "welcome1: " << deq.back().site << std::endl;
                 for (int j = 1; j < deq.size() - 1; ++j) {
                     if (checkinOld(deq.front(), deq.back(), deq[j]) &&
                         !(vert(deq.front(), deq.back()) == vertex.back())) {
                         flag_for_last_vert = 1;
+                        //std::cout << "_______________" << std::endl;
+                        //std::cout << "welcome2: " << deq.back().site << std::endl;
                         vertex.emplace_back(vert(deq.front(), deq.back()));
                     }
                 }
