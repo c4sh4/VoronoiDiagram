@@ -132,8 +132,6 @@ void interAlg::getVertexes() {
             }
             ff_m-=1;
         }
-
-
         int marker_it_for_first_vert = 0;
         for (int m=0, p=1, a=2; m < deq.size(); ++p, ++a)
         {
@@ -179,12 +177,9 @@ void interAlg::getVertexes() {
             }
         }
 
-
-
         if ( i == deq.size()){
             i=0;
         }
-
         vertex.emplace_back(firstVert);
 
         int it_count = 0-marker_it_for_first_vert;
@@ -251,11 +246,22 @@ void interAlg::getVertexes() {
             std::cout << "Polytopes: " << truth_res[qq] << "\n";
         }
     }  else {
-        vertex.emplace_back(vert(deq.front(), deq.back()));
+        truth_res.push_back(deq[0]);
+        std::cout << "Site: "<< deq[0].site << std::endl;
+        if (deq.size()==2){
+            truth_res.push_back(deq[1]);
+            get_vertexes_fast(truth_res.front(), truth_res.back());
+            std::cout << "Polytopes: " << truth_res[0] << "\n";
+            std::cout << "Polytopes: " << truth_res[1] << "\n";
+        } else if (deq.size() == 1){
+            std::cout << "Polytopes: " << truth_res[0] << "\n";
+        }
     }
 }
 bool interAlg::get_vertexes_fast(halfPlane& front, halfPlane& back){
+    if (InfNanVertex(front, back)){
         std::cout << "Vertex: " << vert(front, back) << std::endl;
+    }
 }
 
 
