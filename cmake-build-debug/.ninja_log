@@ -72,3 +72,7 @@
 1284	1687	6952634760064692	VoronoiDiagram.exe	8097cb4b4d0f5f81
 2	1239	6952635140885644	CMakeFiles/VoronoiDiagram.dir/interAlg.cpp.obj	df58eb9aefd49412
 1240	1629	6952635144740017	VoronoiDiagram.exe	8097cb4b4d0f5f81
+2	2143	6954136847959713	CMakeFiles/VoronoiDiagram.dir/main.cpp.obj	54d38cec87a865b3
+98	2192	6954136848459816	CMakeFiles/VoronoiDiagram.dir/halfPlane.cpp.obj	39a7f9469dc4dc7
+101	2240	6954136848939926	CMakeFiles/VoronoiDiagram.dir/interAlg.cpp.obj	df58eb9aefd49412
+2240	2540	6954136851900598	VoronoiDiagram.exe	8097cb4b4d0f5f81

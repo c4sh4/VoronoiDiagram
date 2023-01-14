@@ -20,19 +20,4 @@ int main() {
     cells = sites.getPolytopes();
     interAlg test;
     test.Voronoi(cells);
-
-    /*
-    std::ofstream out;
-    out.open("C:\\Users\\Admin\\CLionProjects\\VoronoiDiagram\\cmake-build-debug\\test.txt");
-    if (out.is_open())
-    {
-        for(int i = 0; i < 1000; ++i)
-        {
-            out << i << " 0" << std::endl;
-        }
-    }
-
-    std::cout << "End of program" << std::endl;
-    return 0;
-*/
 }
